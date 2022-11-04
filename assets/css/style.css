@@ -887,8 +887,9 @@ body {
 .counter-section {
  width: 100%;
  padding-top: 100px;
- padding-bottom: 50px;
- background: #FFFFFF;
+ /* padding-bottom: 50px; */
+ /* background: #FFFFFF; */
+ background: transparent;
 }
 
 .counter-section h3  {
@@ -917,7 +918,8 @@ body {
   font-size: 16px;
   font-weight: 400;
   padding: 0.5em;
-  color: #111111;
+  /* color: #111111; */
+  color: #FFFFFF;
 }
 
 /* -------- Counter Section Styling Ends --------- */
