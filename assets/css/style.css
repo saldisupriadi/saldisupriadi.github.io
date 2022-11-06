@@ -415,7 +415,7 @@ body {
 /* ----- Hero Section Styling Starts ----- */
 
 .hero-section {
-	background-image: linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.1)), url("../images/hero3.jpg");
+	background-image: linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.1)), url("../images/bg-lad.png");
 	/* background-color: #5924EC; */
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
@@ -916,7 +916,7 @@ body {
 .counter-text h4 {
   font-family: Poppins;
   font-size: 16px;
-  font-weight: 400;
+  font-weight: bold;
   padding: 0.5em;
   /* color: #111111; */
   color: #FFFFFF;
@@ -1579,7 +1579,7 @@ label {
 	}
 
 	.hero-content h1 {
-		font-size: 64px;
+		font-size: 60px;
     font-weight: 600;
     line-height: 1.2;
 		margin-top: 0;
