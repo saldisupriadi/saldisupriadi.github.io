@@ -415,8 +415,9 @@ body {
 /* ----- Hero Section Styling Starts ----- */
 
 .hero-section {
-	background-image: linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.1)), url("../images/bg-lad.png");
+	/* background-image: linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.1)), url("../images/bg-lad.png"); */
 	/* background-color: #5924EC; */
+	background-image: url("../images/bg-lad.png");
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
 	background-size: cover;
