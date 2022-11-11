@@ -25,6 +25,16 @@ All Contents
    License: none (public domain)
 */
 
+@font-face {
+	font-family: 'Visby Round CF';
+	src: url("../fonts/VisbyRoundCF-Regular.woff");
+}
+
+/* @font-face {
+	font-family: 'Visby Round CF';
+	src: url("../fonts/VisbyRoundCF-Bold.woff");
+} */
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -417,7 +427,7 @@ body {
 .hero-section {
 	/* background-image: linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.1)), url("../images/bg-lad.png"); */
 	/* background-color: #5924EC; */
-	background-image: url("../images/bg-lad.png");
+	background-image: url("../images/bg-lad-new.png");
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -482,16 +492,19 @@ body {
 
 .btn-action-white {
     font-family: Roboto;
-    background-color: #FFFFFF;
-    border: 2px solid #FFFFFF;
-    border-radius: 20px;
+    /* background-color: #FFFFFF; */
+	background: linear-gradient(163.04deg, rgba(255, 255, 255, 0.45) -115.99%, rgba(255, 255, 255, 0) 194.43%);
+	backdrop-filter: blur(5px);
+    /* border: 2px solid #FFFFFF; */
+    border-radius: 30px;
     color: #000000;
-    font-size: 12px;
-    font-weight: 400;
-    height: 38px;
-    letter-spacing: 2px;
+    font-size: 24px;
+    font-weight: 700;
+    height: 57.72px;
+    /* letter-spacing: 2px; */
     line-height: 3;
     padding: 0 21px;
+	padding-bottom: 70px;
     text-transform: uppercase;
     outline: none;
     -webkit-transition: 200ms;
@@ -501,6 +514,39 @@ body {
 }
 
 .btn-action-white:hover {
+	background: transparent;
+	outline: none;
+	color: #FFFFFF;
+	border-color: #d1d1d1;
+}
+
+.txt-navbar {
+	font-family: 'Visby Round CF';
+	text-transform: capitalize;
+	font-style: normal;
+	font-size: 24px;
+}
+
+.btn-daftar {
+	font-family: 'Visby Round CF';
+    /* background-color: #FFFFFF; */
+	background: linear-gradient(180deg, #FFFFFF -51.47%, rgba(255, 255, 255, 0) 111.76%);
+	backdrop-filter: blur(5px);
+    /* border: 2px solid #FFFFFF; */
+    border-radius: 30px;
+    font-size: 24px;
+    font-weight: 700;
+    /* letter-spacing: 2px; */
+    line-height: 3;
+    text-transform: capitalize;
+    outline: none;
+    -webkit-transition: 200ms;
+    -moz-transition: 200ms;
+    -o-transition: 200ms;
+    transition: 200ms;
+}
+
+.btn-daftar:hover {
 	background: transparent;
 	outline: none;
 	color: #FFFFFF;
@@ -524,10 +570,14 @@ body {
 
 .txt-white h1 {
 	color: #FFFFFF;
+	font-family: 'Visby Round CF';
+	src: url("../fonts/VisbyRoundCF-Regular.woff");
 }
 
 .txt-white p {
 	color: #FFFFFF;
+	font-family: 'Visby Round CF';
+	src: url("../fonts/VisbyRoundCF-Regular.woff");
 }
 
 .app-hero {
@@ -600,7 +650,7 @@ body {
 
 
 .services-section {
-	background: #FFFFFF;
+	background: #EFE8FF;
 }
 
 .services-content {
@@ -609,20 +659,23 @@ body {
 }
 
 .services-content h1 {
-	font-family: Poppins;
-	font-size: 24px;
-	color: #111111;
-	font-weight: 600;
+	font-family: 'Visby Round CF';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 48px;
+	color: #000000;
+	font-weight: 700;
 	letter-spacing: 0;
 	line-height: 1.4;
 	margin-bottom: 10px;
 }
 
 .services-content p {
-	font-family: Poppins;
-	font-size: 14px;
-	color: #444444;
+	font-family: 'Visby Round CF';
+	font-style: normal;
 	font-weight: 400;
+	font-size: 24px;
+	color: #000000;
 	letter-spacing: 1px;
 	line-height: 1.4;
 	margin-top: 0px;
@@ -661,10 +714,11 @@ body {
 }
 
 .services .services-description h1 {
-	font-family: Poppins;
-	font-size: 18px;
-	color: #111111;
-	font-weight: 600;
+	font-family: 'Visby Round CF';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 20px;
+	color: #000000;
 	letter-spacing: 0;
 	line-height: 1.4;
 	margin-top: 20px;
@@ -672,10 +726,11 @@ body {
 }
 
 .services .services-description p {
-	font-family: Poppins;
-	font-size: 13px;
-	color: #444444;
-	font-weight: 300;
+	font-family: 'Visby Round CF';
+	font-size: 20px;
+	color: #303030;
+	font-style: normal;
+	font-weight: 400;
 	letter-spacing: 1px;
 	line-height: 1.5;
 	margin-top: 0;
@@ -910,17 +965,22 @@ body {
 }
 
 .counter-text {
+	font-family: 'Visby Round CF';
+	src: url("../fonts/VisbyRoundCF-Regular.woff");
 	margin-top: 10px;
-  margin-bottom: 20px;
+	margin-bottom: 20px;
+	color: #272723;
 }
 
 .counter-text h4 {
-  font-family: Poppins;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 0.5em;
-  /* color: #111111; */
-  color: #FFFFFF;
+	font-family: 'Visby Round CF';
+	src: url("../fonts/VisbyRoundCF-Regular.woff");
+	font-size: 20px;
+	font-weight: 700;
+	font-style: normal;
+	/* padding: 0.5em; */
+	/* color: #111111; */
+	color: #272723;
 }
 
 /* -------- Counter Section Styling Ends --------- */
@@ -1646,12 +1706,26 @@ label {
 	}
 
 	.services-content h1 {
-		font-size: 28px;
+		font-family: 'Visby Round CF';
+		font-style: normal;
+		font-weight: 700;
+		font-size: 48px;
+		color: #000000;
+		font-weight: 700;
+		letter-spacing: 0;
 		line-height: 1.4;
+		margin-bottom: 10px;
 	}
 
 	.services-content p {
-		font-size: 14px;
+		font-family: 'Visby Round CF';
+		font-style: normal;
+		font-weight: 400;
+		font-size: 24px;
+		color: #000000;
+		letter-spacing: 1px;
+		line-height: 1.4;
+		margin-top: 0px;
 	}
 
 	.services .services-description {
