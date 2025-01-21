@@ -21,23 +21,25 @@ paths:
                       type: integer
                     name:
                       type: string
-
-
-paths:
-  /users:
-    get:
-      summary: Get all users
-      responses:
-        '200':
-          description: A list of users
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    name:
-                      type: string
+  /logindevice:
+    post:
+        summary: Login device
+        responses:
+          '200':
+            description: Response yang didapatkan ketika endpoint /logindevice berhasil dijalankan.
+            content:
+              application/json:
+                schema:
+                  type:
+                    object
+                    items:
+                      type: object
+                      properties:
+                        data:
+                          type: object
+                          properties:
+                            tid:
+                              type: string
+                            sn_device:
+                              type: string
+                      
