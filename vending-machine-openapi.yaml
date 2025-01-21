@@ -1,0 +1,35 @@
+---
+info:
+  _postman_id: cd52be11-a626-44ea-a3b4-4d54da92f92f
+  name: Vending Machine
+  description: |-
+    API Documentations
+
+    URL Dev : [http://192.168.1.83/etopup/public/api](http://192.168.1.83)
+  schema: https://schema.getpostman.com/json/collection/v2.1.0/collection.json
+  _exporter_id: '7085933'
+item:
+- name: Login
+  request:
+    method: POST
+    header: []
+    url:
+      raw: "{{base_url}}/logindevice?tid=099999999&sn_device=00005274&sn_kartu=F178271F&id_kartu=100024&shift=1&tipe=20"
+      host:
+      - "{{base_url}}"
+      path:
+      - logindevice
+      query:
+      - key: tid
+        value: '099999999'
+      - key: sn_device
+        value: '00005274'
+      - key: sn_kartu
+        value: F178271F
+      - key: id_kartu
+        value: '100024'
+      - key: shift
+        value: '1'
+      - key: tipe
+        value: '20'
+  response: []
