@@ -13,6 +13,8 @@ servers:
 paths:
   /api/logindevice:
     get:
+      tags:
+        - Login Device
       summary: Get all data logindevice
       description: >-
         Endpoint ini digunakan untuk get all data, select all dari tabel
@@ -151,15 +153,15 @@ paths:
       security:
         - {}
     post:
+      tags:
+        - Login Device
       summary: Login
       description: >-
         Endpoint ini digunakan untuk login, parameter yang dikirimkan akan di
         cek persamaan data nya pada  
 
         tabel login_device. Apabila data tersebut valid, maka akan memberikan
-        respon  
-
-        data hasil dari select all ke tabel login_device.
+        respon data hasil dari select all ke tabel login_device.
       operationId: login
       parameters:
         - name: tid
@@ -297,3 +299,215 @@ paths:
                     responseLocal:
                       responseCode: '00'
                       responseDesc: Updated
+  /api/merchant:
+    get:
+      tags:
+        - Merchant
+      summary: Get all data merchant
+      description: 'Digunakan untuk get all data, select all dari tabel merchant.'
+      operationId: getAllDataMerchant
+      responses:
+        '200':
+          description: Success / Data not found
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                example: 'no-cache, private'
+            Connection:
+              schema:
+                type: string
+                example: close
+            Date:
+              schema:
+                type: string
+                example: 'Tue, 21 Jan 2025 10:41:38 GMT'
+            Server:
+              schema:
+                type: string
+                example: Apache/2.2.15 (CentOS)
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/7.2.33
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        client_id:
+                          type: string
+                          example: gHY7C2rr05uSAyh3PRxuGr1xTfb8itgH
+                        desk:
+                          type: string
+                          example: PT. HK ATP
+                        idcabang:
+                          type: string
+                          example: '5151'
+                        idmerchant:
+                          type: string
+                          example: '000001'
+                        lokasi:
+                          type: string
+                          example: TANJUNG PRIOK
+                    example:
+                      - client_id: gHY7C2rr05uSAyh3PRxuGr1xTfb8itgH
+                        desk: PT. HK ATP
+                        idcabang: '5151'
+                        idmerchant: '000001'
+                        lokasi: TANJUNG PRIOK
+                      - client_id: gHY7C2rr05uSAyh3PRxuGr1xTfb8itgH
+                        desk: PT. JLJ
+                        idcabang: '0315'
+                        idmerchant: '000002'
+                        lokasi: JATI ASIH
+                  responseLocal:
+                    type: object
+                    properties:
+                      responseCode:
+                        type: string
+                        example: '00'
+                      responseDesc:
+                        type: string
+                        example: Success
+              examples:
+                Data not found:
+                  value:
+                    responseLocal:
+                      responseCode: '28'
+                      responseDesc: Empty Data
+                Success:
+                  value:
+                    data:
+                      - client_id: gHY7C2rr05uSAyh3PRxuGr1xTfb8itgH
+                        desk: PT. HK ATP
+                        idcabang: '5151'
+                        idmerchant: '000001'
+                        lokasi: TANJUNG PRIOK
+                      - client_id: gHY7C2rr05uSAyh3PRxuGr1xTfb8itgH
+                        desk: PT. JLJ
+                        idcabang: '0315'
+                        idmerchant: '000002'
+                        lokasi: JATI ASIH
+                    responseLocal:
+                      responseCode: '00'
+                      responseDesc: Success
+      security:
+        - {}
+    post:
+      tags:
+        - Merchant
+      summary: Merchant
+      description: >-
+        Digunakan untuk insert data ke tabel merchant dari parameter yang
+        dikirim. apabila insert data merchant berhasil, maka akan memberikan
+        respon data tersebut select dari tabel merchant berdasarkan idmerchant
+        yang baru di insert.
+      operationId: merchant
+      parameters:
+        - name: idmerchant
+          in: query
+          schema:
+            type: string
+            example: '999903'
+        - name: desk
+          in: query
+          schema:
+            type: string
+            example: Development 3
+        - name: lokasi
+          in: query
+          schema:
+            type: string
+            example: Development 3
+        - name: client_id
+          in: query
+          schema:
+            type: string
+            example: gHY7C2rr05uSAyh3PRxuGr1xTfb8itgH
+      responses:
+        '200':
+          description: Success / Data duplicate
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                example: 'no-cache, private'
+            Connection:
+              schema:
+                type: string
+                example: close
+            Content-Length:
+              schema:
+                type: string
+                example: '94'
+            Date:
+              schema:
+                type: string
+                example: 'Wed, 22 Jan 2025 02:39:55 GMT'
+            Server:
+              schema:
+                type: string
+                example: Apache/2.2.15 (CentOS)
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/7.2.33
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      client_id:
+                        type: string
+                        example: gHY7C2rr05uSAyh3PRxuGr1xTfb8itgH
+                      desk:
+                        type: string
+                        example: Development 3
+                      idcabang:
+                        nullable: true
+                        example: ~
+                      idmerchant:
+                        type: string
+                        example: '999903'
+                      lokasi:
+                        type: string
+                        example: Development 3
+                  responseLocal:
+                    type: object
+                    properties:
+                      responseCode:
+                        type: string
+                        example: '00'
+                      responseDesc:
+                        type: string
+                        example: Created
+              examples:
+                Data duplicate:
+                  value:
+                    responseLocal:
+                      responseCode: '43'
+                      responseDesc: Duplicate entry for IdMerchant 999999
+                Success:
+                  value:
+                    data:
+                      client_id: gHY7C2rr05uSAyh3PRxuGr1xTfb8itgH
+                      desk: Development 3
+                      idcabang: ~
+                      idmerchant: '999903'
+                      lokasi: Development 3
+                    responseLocal:
+                      responseCode: '00'
+                      responseDesc: Created
