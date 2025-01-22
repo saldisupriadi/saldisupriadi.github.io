@@ -4,21 +4,23 @@ info:
   description: |-
     API Documentations
 
-    URL Dev : [http://192.168.1.83/etopup/public/api](http://192.168.1.83)
+    URL Dev : [http://192.168.1.83/etopup/public](http://192.168.1.83)
   version: 1.0.0
   contact: {}
 servers:
   - url: '{{base_url}}'
   - url: 'https://api.getpostman.com'
 paths:
-  /logindevice:
+  /api/logindevice:
     get:
       summary: Get all data logindevice
-      description: Get all data logindevice
+      description: >-
+        Endpoint ini digunakan untuk get all data, select all dari tabel
+        login_device.
       operationId: getAllDataLogindevice
       responses:
         '200':
-          description: '200'
+          description: Success / Data not found
           headers:
             Cache-Control:
               schema:
@@ -115,7 +117,12 @@ paths:
                         type: string
                         example: Success
               examples:
-                '200':
+                Data not found:
+                  value:
+                    responseLocal:
+                      responseCode: '28'
+                      responseDesc: Empty Data
+                Success:
                   value:
                     data:
                       - active: 1
@@ -145,7 +152,14 @@ paths:
         - {}
     post:
       summary: Login
-      description: Login
+      description: >-
+        Endpoint ini digunakan untuk login, parameter yang dikirimkan akan di
+        cek persamaan data nya pada  
+
+        tabel login_device. Apabila data tersebut valid, maka akan memberikan
+        respon  
+
+        data hasil dari select all ke tabel login_device.
       operationId: login
       parameters:
         - name: tid
@@ -180,29 +194,106 @@ paths:
             example: '20'
       responses:
         '200':
-          description: ''
-  '/collections/{collection_id}/transformations':
-    get:
-      summary: Open API Documentation
-      description: Open API Documentation
-      operationId: openApiDocumentation
-      responses:
-        '200':
-          description: ''
-      security:
-        - apiKey: []
-    parameters:
-      - name: collection_id
-        in: path
-        required: true
-        schema:
-          type: string
-          example: 7085933-cd52be11-a626-44ea-a3b4-4d54da92f92f
-        description: Get from collection details
-components:
-  securitySchemes:
-    apiKey:
-      type: apiKey
-      name: X-API-Key
-      in: header
-tags: []
+          description: Success / Data not found
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                example: 'no-cache, private'
+            Connection:
+              schema:
+                type: string
+                example: close
+            Content-Length:
+              schema:
+                type: string
+                example: '67'
+            Date:
+              schema:
+                type: string
+                example: 'Wed, 22 Jan 2025 01:50:33 GMT'
+            Server:
+              schema:
+                type: string
+                example: Apache/2.2.15 (CentOS)
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/7.2.33
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      active:
+                        type: number
+                        example: 1
+                      app_version:
+                        type: string
+                        example: '100'
+                      id:
+                        type: number
+                        example: 1406
+                      id_kartu:
+                        type: string
+                        example: '100024'
+                      last_access:
+                        type: string
+                        example: '2025-01-22 08:49:16'
+                      shift:
+                        type: number
+                        example: 1
+                      sn_device:
+                        type: string
+                        example: '00005274'
+                      sn_kartu:
+                        type: string
+                        example: F178271F
+                      tid:
+                        type: string
+                        example: 099999999
+                      tipe:
+                        type: number
+                        example: 20
+                      waktu_buka:
+                        nullable: true
+                        example: ~
+                      waktu_tutup:
+                        nullable: true
+                        example: ~
+                  responseLocal:
+                    type: object
+                    properties:
+                      responseCode:
+                        type: string
+                        example: '00'
+                      responseDesc:
+                        type: string
+                        example: Updated
+              examples:
+                Data not found:
+                  value:
+                    responseLocal:
+                      responseCode: '28'
+                      responseDesc: Empty Data
+                Success:
+                  value:
+                    data:
+                      active: 1
+                      app_version: '100'
+                      id: 1406
+                      id_kartu: '100024'
+                      last_access: '2025-01-22 08:49:16'
+                      shift: 1
+                      sn_device: '00005274'
+                      sn_kartu: F178271F
+                      tid: 099999999
+                      tipe: 20
+                      waktu_buka: ~
+                      waktu_tutup: ~
+                    responseLocal:
+                      responseCode: '00'
+                      responseDesc: Updated
