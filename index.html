@@ -1,12 +1,298 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TikTok Infinite Scroll</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      background-color: #000;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+    .container { width: 100%; }
+    .video-wrapper {
+      scroll-snap-align: start;
+      height: 100vh;
+      width: 100%;
+      background: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    video {
+      height: 100%;
+      width: auto;
+      object-fit: contain;
+    }
+    .overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+    }
+    .video-info {
+      position: absolute;
+      bottom: 80px;
+      left: 20px;
+      pointer-events: none;
+    }
+    .video-info .username { font-weight: bold; margin-bottom: 5px; }
+    .video-info .description { font-size: 14px; color: #ddd; }
+    .buttons {
+      position: absolute;
+      bottom: 80px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+      pointer-events: none;
+    }
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    .button-icon {
+      font-size: 22px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      padding: 10px;
+      user-select: none;
+    }
+    .button-label {
+      font-size: 12px;
+      margin-top: 3px;
+      color: #fff;
+    }
+    .comment-popup {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #111;
+      border-top: 1px solid #444;
+      padding: 10px;
+      display: none;
+      flex-direction: column;
+      z-index: 10;
+    }
+    .comment-popup input {
+      background: #222;
+      border: none;
+      padding: 10px;
+      color: white;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+    .comment-popup .close {
+      align-self: flex-end;
+      cursor: pointer;
+      color: #999;
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
-    <h1>HALO</h1>
+
+  <div class="container" id="container"></div>
+
+  <div class="comment-popup" id="commentPopup">
+    <div class="close" onclick="closeComment()">Tutup ✖</div>
+    <div>- user1: Mantap!</div>
+    <div>- user2: Keren banget</div>
+    <input type="text" placeholder="Tulis komentar... (fiktif)" />
+  </div>
+
+  <script>
+    const container = document.getElementById("container");
+    const commentPopup = document.getElementById("commentPopup");
+
+    const dummyVideos = [
+      {
+        src: "videos/ssstik.io_@rimmadmyntiiiiiii_1746540651034.mp4",
+        username: "@dummy1",
+        description: "Video dummy pertama"
+      },
+      {
+        src: "videos/ssstik.io_@rimmadmyntiiiiiii_1746540742947.mp4",
+        username: "@dummy2",
+        description: "Video dummy kedua"
+      },
+      {
+        src: "videos/ssstik.io_@rimmadmyntiiiiiii_1746540706883.mp4",
+        username: "@dummy3",
+        description: "Video dummy ketiga"
+      }
+    ];
+
+    let currentIndex = 0;
+    let observer;
+    let isLoading = false;
+    let userHasInteracted = false;
+
+    function createVideoElement({ src, username, description }) {
+      const wrapper = document.createElement("div");
+      wrapper.className = "video-wrapper";
+
+      const video = document.createElement("video");
+      video.src = src;
+      video.muted = true;
+      video.autoplay = true;
+      video.playsInline = true;
+      wrapper.appendChild(video);
+
+      video.addEventListener('click', () => {
+        userHasInteracted = true;
+        video.muted = !video.muted;
+      })
+
+      const overlay = document.createElement("div");
+      overlay.className = "overlay";
+      overlay.innerHTML = `
+        <div class="video-info">
+          <div class="username">${username}</div>
+          <div class="description">${description}</div>
+        </div>
+        <div class="buttons">
+          <div class="button-group" onclick="toggleLike(this)">
+            <div class="button-icon">❤</div>
+            <div class="button-label">0</div>
+          </div>
+          <div class="button-group" onclick="openComment()">
+            <div class="button-icon">💬</div>
+            <div class="button-label">Komentar</div>
+          </div>
+          <div class="button-group" onclick="shareVideo()">
+            <div class="button-icon">🔗</div>
+            <div class="button-label">Bagikan</div>
+          </div>
+        </div>
+      `;
+      wrapper.appendChild(overlay);
+
+      return wrapper;
+    }
+
+    function loadVideos(count = 3) {
+      for (let i = 0; i < count; i++) {
+        const videoData = dummyVideos[i % dummyVideos.length];
+        const el = createVideoElement(videoData);
+        container.appendChild(el);
+        setupObserver(el.querySelector("video"));
+      }
+    }
+
+    function setupObserver(video) {
+      if (!observer) {
+        observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.play();
+
+              if (userHasInteracted) {
+                entry.target.muted = false;
+              }
+
+              currentIndex = Array.from(container.querySelectorAll("video")).indexOf(entry.target);
+
+              // Infinite scroll trigger
+              if (currentIndex >= container.children.length - 2 && !isLoading) {
+                isLoading = true;
+                setTimeout(() => {
+                  loadVideos(3);
+                  isLoading = false;
+                }, 500);
+              }
+            } else {
+              entry.target.pause();
+            }
+          });
+        }, { threshold: 0.75 });
+      }
+      observer.observe(video);
+      video.addEventListener("ended", () => {
+        const allVideos = container.querySelectorAll(".video-wrapper");
+        if (currentIndex + 1 < allVideos.length) {
+          allVideos[currentIndex + 1].scrollIntoView({ behavior: "smooth" });
+        }
+      });
+    }
+
+    function toggleLike(btnGroup) {
+      const icon = btnGroup.querySelector('.button-icon');
+      const label = btnGroup.querySelector('.button-label');
+      let count = parseInt(label.textContent);
+      if (btnGroup.classList.contains('liked')) {
+        icon.textContent = '❤';
+        label.textContent = count - 1;
+        btnGroup.classList.remove('liked');
+      } else {
+        icon.textContent = '💖';
+        label.textContent = count + 1;
+        btnGroup.classList.add('liked');
+      }
+    }
+
+    function openComment() {
+      commentPopup.style.display = 'flex';
+    }
+
+    function closeComment() {
+      commentPopup.style.display = 'none';
+    }
+
+    function shareVideo() {
+      alert("Tautan video disalin! (simulasi)");
+    }
+
+    // Swipe gesture - Touch
+    let touchStartY = 0;
+    document.addEventListener('touchstart', (e) => {
+      touchStartY = e.touches[0].clientY;
+    });
+    document.addEventListener('touchend', (e) => {
+      const diff = touchStartY - e.changedTouches[0].clientY;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) scrollToVideo(currentIndex + 1);
+        else scrollToVideo(currentIndex - 1);
+      }
+    });
+
+    // Swipe gesture - Mouse
+    let mouseStartY = 0;
+    let isDragging = false;
+    document.addEventListener('mousedown', (e) => {
+      mouseStartY = e.clientY;
+      isDragging = true;
+    });
+    document.addEventListener('mouseup', (e) => {
+      if (!isDragging) return;
+      const diff = mouseStartY - e.clientY;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) scrollToVideo(currentIndex + 1);
+        else scrollToVideo(currentIndex - 1);
+      }
+      isDragging = false;
+    });
+
+    function scrollToVideo(index) {
+      const all = document.querySelectorAll(".video-wrapper");
+      if (index >= 0 && index < all.length) {
+        all[index].scrollIntoView({ behavior: "smooth" });
+      }
+    }
+
+    // Init
+    loadVideos(3);
+  </script>
 </body>
 </html>
