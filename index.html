@@ -1,12 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EFFICIO - Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Nunito', sans-serif;
+    }
+
+    body, html {
+        height: 100%;
+        background-color: #fff;
+    }
+
+    .login-container {
+        display: flex;
+        height: 100vh;
+        border: 1px solid #444;
+    }
+
+    .left-panel {
+        flex: 1;
+        /* background: url('gradient-bg.png') no-repeat center center;
+        background-size: cover; */
+        background: linear-gradient(to bottom right, #ffcf91, #ff9d84);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .left-panel .logo {
+        width: 60%;
+        max-width: 500px;
+    }
+
+    .right-panel {
+        flex: 1;
+        background-color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .form-box {
+        width: 80%;
+        max-width: 300px;
+        text-align: left;
+    }
+
+    .title {
+        font-size: 32px;
+        color: #5d3b4c;
+        font-weight: 800;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    label {
+        font-size: 14px;
+        color: #555;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px 15px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-weight: bold;
+        color: #5d3b4c;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(to right, #fbeee0, #f0e2dc);
+        border: none;
+        border-radius: 30px;
+        font-weight: bold;
+        color: #5d3b4c;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        cursor: pointer;
+    }
+</style>
 <body>
-    <h1>HALO</h1>
+  <div class="login-container">
+    <div class="left-panel">
+      <img src="images/astra-infra-solutions.png" alt="Astra Infra Sulutions" class="logo" />
+    </div>
+    <div class="right-panel">
+      <div class="form-box">
+        <h1 class="title">EFFICIO</h1>
+        <form>
+          <label for="email">Masukan email</label>
+          <input type="email" id="email" placeholder="EMAIL" required />
+
+          <label for="password">Masukan password</label>
+          <input type="password" id="password" placeholder="PASSWORD" required />
+
+            <a href="beranda.html">
+                <button type="button">LOGIN</button>
+            </a>
+        </form>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
